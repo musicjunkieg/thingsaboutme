@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Things About Me</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            min-height: 100vh;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 2rem 0;
+        }
+        
+        .title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #999 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .cards {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+        
+        .card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-number {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 0.9rem;
+            color: #444;
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .card-content {
+            font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: -0.01em;
+            margin-right: 3rem;
+        }
+        
+        .permalink {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: #666;
+        }
+        
+        .card:hover .permalink {
+            opacity: 1;
+        }
+        
+        .permalink:hover {
+            color: #fff;
+        }
+        
+        .card.highlighted {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: #333;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .header {
+                margin-bottom: 3rem;
+            }
+            
+            .card {
+                padding: 2rem;
+            }
+            
+            .card-content {
+                margin-right: 2rem;
+            }
+            
+            .card-number {
+                right: 1.5rem;
+            }
+            
+            .permalink {
+                right: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .card-content {
+                margin-right: 1rem;
+            }
+            
+            .card-number {
+                right: 1rem;
+                top: 1rem;
+            }
+            
+            .permalink {
+                right: 1rem;
+                bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Things About Me</h1>
+            <p class="subtitle">A reference guide for the internet</p>
+        </header>
+        
+        <main class="cards" id="cards">
+            <!-- Cards will be generated here -->
+        </main>
+        
+        <footer class="footer">
+            <p>Updated whenever I feel like it</p>
+        </footer>
+    </div>
+
+    <script>
+        // This will be replaced by the build script with actual content
+        const things = [
+            "I am not your average person - I contain multitudes and contradictions that make perfect sense to me.",
+            "Your assumptions about me are probably wrong, and that's okay - I'd rather be misunderstood than boring.",
+            "I believe in being authentically chaotic rather than performatively normal.",
+            "If you're here because you said something stupid to me on social media, maybe reflect on that.",
+            "I'm probably more complex than whatever box you tried to put me in.",
+            "I don't owe you consistency - I reserve the right to evolve, contradict myself, and change my mind.",
+            "My existence is not a debate topic, and I'm not here to justify myself to strangers on the internet."
+        ];
+        
+        function generateCards() {
+            const cardsContainer = document.getElementById('cards');
+            cardsContainer.innerHTML = '';
+            
+            things.forEach((thing, index) => {
+                const cardNumber = index + 1;
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.id = `thing-${cardNumber}`;
+                
+                card.innerHTML = `
+                    <div class="card-number">${cardNumber.toString().padStart(2, '0')}</div>
+                    <div class="card-content">${thing}</div>
+                    <a href="#thing-${cardNumber}" class="permalink">🔗</a>
+                `;
+                
+                cardsContainer.appendChild(card);
+            });
+        }
+        
+        function handleDirectLinks() {
+            if (window.location.hash) {
+                const element = document.querySelector(window.location.hash);
+                if (element) {
+                    setTimeout(() => {
+                        element.classList.add('highlighted');
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        
+                        setTimeout(() => {
+                            element.classList.remove('highlighted');
+                        }, 3000);
+                    }, 100);
+                }
+            }
+        }
+        
+        function setupPermalinks() {
+            document.querySelectorAll('.permalink').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('href');
+                    const element = document.querySelector(target);
+                    
+                    // Update URL
+                    history.replaceState(null, null, target);
+                    
+                    // Highlight and scroll
+                    element.classList.add('highlighted');
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    setTimeout(() => {
+                        element.classList.remove('highlighted');
+                    }, 3000);
+                });
+            });
+        }
+        
+        // Initialize
+        generateCards();
+        handleDirectLinks();
+        setupPermalinks();
+        
+        // Handle browser back/forward
+        window.addEventListener('popstate', handleDirectLinks);
+    </script>
+</body>
+</html>
